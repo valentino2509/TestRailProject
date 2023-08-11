@@ -223,5 +223,92 @@
 		</dependency>
 		
 	</dependencies>    
+	
+	<build>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- disable default tests -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M4</version>
+				<executions>
+					<execution>
+						<id>default-test</id>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- tests -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M4</version>
+
+				<configuration>
+					<argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.jupiter</groupId>
+						<artifactId>junit-jupiter-engine</artifactId>
+						<version>${junit.jupiter.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>3.0.0-M4</version>
+					</dependency>
+				</dependencies>
+
+				<executions>
+					<!-- before suite -->
+					<execution>
+						<id>before-suite</id>
+						<phase>test</phase>
+						<configuration>
+							<test>BeforeSuite.java</test>
+						</configuration>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+
+					<!-- tests -->
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+
+					<!-- after suite -->
+					<execution>
+						<id>after-suite</id>
+						<phase>test</phase>
+						<configuration>
+							<test>AfterSuite.java</test>
+						</configuration>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
   
 </project>

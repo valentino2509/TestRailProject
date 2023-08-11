@@ -25,9 +25,9 @@ public class TestRailDocumentationRule implements AfterEachCallback {
             try {
                 printer = new PrintStream("logs/TestWithoutTestRailAnnotation" + System.currentTimeMillis() + ".log");
                 
-                client = new APIClient("https://sureclinical.testrail.net");
-                client.setUser("valentino@wedoqa.co");
-                client.setPassword("02NS-17.r02.S");
+                client = new APIClient("https://test.testrail.net"); //FIXME add your TestRail link
+                client.setUser("");	//FIXME add yout TestRail username
+                client.setPassword("");	//FIXME add your testRail password
                 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
